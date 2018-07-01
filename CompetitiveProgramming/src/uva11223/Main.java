@@ -103,10 +103,10 @@ class Main {
 		morseConversion.put(".-.-.-",'.');
 		morseConversion.put("--..--",',');
 		morseConversion.put("..--..",'?');
-		morseConversion.put(".----.",'’');
+		morseConversion.put(".----.",'\'');
 		morseConversion.put("-.-.--",'!');
 		morseConversion.put("-..-.",'/');
-		morseConversion.put("-.–.",'(');
+		morseConversion.put("-.--.",'(');
 		morseConversion.put("-.--.-",')');
 		morseConversion.put(".-...",'&');
 		morseConversion.put("---...",':');
