@@ -10,7 +10,8 @@ class Main {
 
 	static Map<Character,Integer> conversionMap;
 	static Map<Character,Integer> conversionMap2;
-	static Map<Character,String>[] conversions;
+	static Map<Character,String> conversions;
+	
 	public static void main(String[] args) {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -58,17 +59,17 @@ class Main {
 		conversionMap2.put('X', 8);
 		conversionMap2.put('V', 3);
 		
-		conversions = new Map[4];
-		conversions[0] = new HashMap<Character,String>();
-		conversions[0].put('1', "I");
-		conversions[0].put('2', "II");
-		conversions[0].put('3', "III");
-		conversions[0].put('4', "IV");
-		conversions[0].put('5', "V");
-		conversions[0].put('6', "VI");
-		conversions[0].put('7', "VII");
-		conversions[0].put('8', "VIII");
-		conversions[0].put('9', "IX");
+		conversions = new HashMap<Character,String>();
+		conversions.put('0', "");
+		conversions.put('1', "0");
+		conversions.put('2', "00");
+		conversions.put('3', "000");
+		conversions.put('4', "10");
+		conversions.put('5', "1");
+		conversions.put('6', "01");
+		conversions.put('7', "001");
+		conversions.put('8', "0001");
+		conversions.put('9', "20");
 		
 		
 	}
@@ -98,9 +99,43 @@ class Main {
 		
 		StringBuilder returnend = new StringBuilder();
 		
-		for (int i = arabic.length() ; i > 0 ; --i) {
+		for (int i = arabic.length()-1 ; i >= 0 ; --i) {
+			char[] s = conversions.get(arabic.charAt(i)).toCharArray();
 			
+			for (int j = 0 ; j < s.length ; j++) {
+			if (arabic.length() - i == 4) {
+				s[j] = 'M';
+			}
+			else if (arabic.length() - i == 3) {
+				if (s[j] == '0')
+					s[j] = 'C';
+				else if (s[j] == '1')
+					s[j] = 'D';
+				else
+					s[j] = 'M';
+			}
+			else if (arabic.length() - i == 2) {
+				if (s[j] == '0')
+					s[j] = 'X';
+				else if (s[j] == '1')
+					s[j] = 'L';
+				else
+					s[j] = 'C';
+			}else {
+				if (s[j] == '0')
+					s[j] = 'I';
+				else if (s[j] == '1')
+					s[j] = 'V';
+				else
+					s[j] = 'X';
+				
+			}
+			}
+			returnend.append(s);
 		}
+		
+		
+		return returnend.reverse().toString();
 	}
 
 }
