@@ -9,7 +9,7 @@ public class Test {
 	
 	public static void main(String[] args) {
 		
-		File f = new File("/home/sophy/git/CompetitiveProgramming/CompetitiveProgramming/src/uva11800/test.txt");
+		File f = new File("C:\\Users\\sophyelord\\git\\CompetitiveProgramming\\CompetitiveProgramming\\src\\uva11800\\test.txt");
 		System.out.println(f.exists());
 		try {
 			FileInputStream fis = new FileInputStream(f);
