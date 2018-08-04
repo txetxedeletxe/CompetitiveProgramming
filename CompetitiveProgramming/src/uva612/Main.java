@@ -47,7 +47,7 @@ class Main {
 				for (int strIndex = 0 ; strIndex < strCount ; strIndex++) {
 					strings[strIndex] = br.readLine();
 					invInSeq[strIndex][0] = strIndex;
-					invInSeq[strIndex][1] = numInversions2(strings[strIndex].toCharArray());
+					invInSeq[strIndex][1] = numInversions3(strings[strIndex].toCharArray());
 				}
 				
 				Arrays.sort(invInSeq, comp);
@@ -134,6 +134,66 @@ class Main {
 		}
 		
 		return mid;
+	}
+
+	private static int numInversions3(char[] string) {
+		
+		return mergeSortSwaps(string,0,string.length);
+		
+	}
+
+	private static int mergeSortSwaps(char[] string, int low, int high) {
+		
+		if (low + 1 == high)
+			return 0;
+		
+		int partial = mergeSortSwaps(string, low, (low+high)/2);
+		partial += mergeSortSwaps(string, (low+high)/2, high);
+		
+		return partial + mergeSwaps(string, low, (low+high)/2, high);
+	}
+
+	private static int mergeSwaps(char[] string, int low, int mid, int high) {
+		
+		
+		int i = low;
+		int j = mid;
+		int k = 0;
+		int swaps = 0;
+		char[] temp = new char[high-low];
+		
+		while (i != mid && j != high) {
+			
+			if (string[i] > string[j]) {
+				
+				temp[k++] = string[j++];
+				swaps += mid-i;
+			}
+			else {
+				temp[k++] = string[i++];
+			}
+			
+		}
+		
+		if (i == mid) {
+			
+			for (;j < high ; j++) {
+				temp[k++] = string[j];
+			}
+		}
+		else {
+			for (;i < mid ; i++) {
+				temp[k++] = string[i];
+			}
+		}
+		
+		for (i = low ; i < high ; i++) {
+			string[i] = temp[i-low];
+		}
+		
+		return swaps;
+		
+		
 	}
 	
 }

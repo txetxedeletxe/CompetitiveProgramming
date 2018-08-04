@@ -116,5 +116,66 @@ class Main {
 		
 		return mid;
 	}
+	
+	private static int computeSwaps3(int[] string) {
+		
+		return mergeSortSwaps(string,0,string.length);
+	}
+
+	private static int mergeSortSwaps(int[] string, int low, int high) {
+		if (low + 1 == high)
+			return 0;
+		
+		int partial = mergeSortSwaps(string, low, (low+high)/2);
+		partial +=  mergeSortSwaps(string, (low+high)/2, high);
+		
+		return partial + mergeSwaps(string,low,(low+high)/2,high);
+	}
+
+	private static int mergeSwaps(int[] seq, int low, int mid, int high) {
+		
+		int i = low;
+		int j = mid;
+		int k = 0;
+		int swapCount = 0;
+		
+		int[] temp = new int[high - low];
+		
+		while (i != mid && j != high) {
+			
+			if (seq[i] > seq[j]) {
+				
+				temp[k++] = seq[j];
+				swapCount += mid-i;
+				j++;
+				
+			}
+			else {
+				temp[k++] = seq[i];
+				i++;
+			}
+			
+		}
+		
+		if (i == mid) {
+			
+			for (;j < high ; j++) {
+				temp[k++] = seq[j];
+			}
+		}
+		else {
+			
+			for (;i < mid ; i++) {
+				temp[k++] = seq[i];
+			}
+		}
+		
+		
+		for (i = low ; i < high ; i++) {
+			seq[i] = temp[i-low];
+		}
+		
+		return swapCount;
+	}
 
 }

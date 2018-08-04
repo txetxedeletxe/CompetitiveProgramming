@@ -14,7 +14,7 @@ class Main {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in,"ISO-8859-1"));
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out,"ISO-8859-1"));
 			String str;
-			
+			boolean lined = false;
 			while (true) {
 				
 				str = br.readLine();
@@ -23,23 +23,28 @@ class Main {
 				if (seqLen == 0)
 					break;
 				
-				int[] seq = new int[seqLen];
+				if (lined)
+					bw.write("\n");
+				
+				lined = true;
+				
+				long[] seq = new long[seqLen];
 				for (int seqIndex = 0 ; seqIndex < seqLen ; seqIndex++) {
 					
 					str = br.readLine();
-					int element = Integer.parseInt(str);
+					long element = Long.parseLong(str);
 					seq[seqIndex] = element;
 					
 				}
 				
-				bw.write(uqs(seq,0,seq.length) + "\n");
+				bw.write(uqs(seq,0,seq.length)+"");
 			}
 			bw.flush();
 			
 		}catch(IOException e) {}
 	}
 
-	private static int uqs(int[] seq, int low, int high) {
+	private static int uqs(long[] seq, int low, int high) {
 		
 		if (low +1 == high) {
 			return 0;
@@ -55,33 +60,26 @@ class Main {
 		return partial;
 	}
 
-	private static int mergeSwaps(int[] seq, int low, int mid, int high) {
+	private static int mergeSwaps(long[] seq, int low, int mid, int high) {
 		
 		int i = low;
 		int j = mid;
 		int k = 0;
 		int swapCount = 0;
 		
-		int[] temp = new int[high - low];
+		long[] temp = new long[high - low];
 		
-		int swaprisk = 0;
 		while (i != mid && j != high) {
 			
 			if (seq[i] > seq[j]) {
 				
 				temp[k++] = seq[j];
-				swapCount+= 1;
-				swaprisk++;
+				swapCount += mid-i;
 				j++;
 				
 			}
 			else {
 				temp[k++] = seq[i];
-				
-				if (swaprisk != 0) {
-					swapCount++;
-					swaprisk--;
-				}
 				i++;
 			}
 			
@@ -94,7 +92,7 @@ class Main {
 			}
 		}
 		else {
-			swapCount += swaprisk;
+			
 			for (;i < mid ; i++) {
 				temp[k++] = seq[i];
 			}

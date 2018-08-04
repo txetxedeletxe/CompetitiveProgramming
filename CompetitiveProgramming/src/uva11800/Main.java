@@ -106,6 +106,7 @@ class Main {
 			}
 			
 		}
+		
 		try {
 			bw.flush();
 		} catch (IOException e) {
