@@ -1,4 +1,4 @@
-package uva11492;
+package uva11492P;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ class Main {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out,"ISO-8859-1"));
 			String str = br.readLine();
 			String[] splitend;
+			
 			while (true) {
 				
 				int wordCount = Integer.parseInt(str);
@@ -31,15 +33,23 @@ class Main {
 				Map<String,Integer> languageToNode = new HashMap<>();
 				List<List<Object[]>> adjList = new ArrayList<>();
 				
+				List<List<Character>> listOfChar = new ArrayList<>();
+				List<boolean[]> listOfCharSet = new ArrayList<>();
+				
 				str = br.readLine();
 				splitend = str.split(" ");
 				
 				languageToNode.put(splitend[0], 0);
 				languageToNode.put(splitend[1], 1);
+				
 				adjList.add(new ArrayList<Object[]>());
 				adjList.add(new ArrayList<Object[]>());
+				listOfChar.add(new ArrayList<Character>());
+				listOfChar.add(new ArrayList<Character>());
+				
 				int nextNode = 0;
 				
+				int totalNodes = 0;
 				
 				for (int wordIndex = 0 ; wordIndex < wordCount ; wordIndex++) {
 					
@@ -64,29 +74,23 @@ class Main {
 					adjList.get(node1).add(new Object[] {node0, word.length(), word.charAt(0)});
 				}
 				
-				List<Object[]> adjList2 = new ArrayList<>();
-				int[] breakPointArray = new int[adjList.size()]; 
-				for (int i = 0 ; i < adjList.size() ; i++) {
-					
-					boolean[] charset = new boolean[30];
-					
-					for (Object[] oarray : adjList.get(i)) {
-						
-						if (!charset[(char)oarray[2] - 'a']) {
-							
-							charset[(char)oarray[2] - 'a'] = true;
-							adjList2.add(new Object[] {oarray[2],new ArrayList<int[]>()});
-							
-							
-						}
-					}
-					
-					breakPointArray[i] = adjList2.size();
-				}
+				List<Object[]> graph2 = new ArrayList<>(totalNodes);
+				int[] limits = new int[adjList.size()];
 				
 				for (int i = 0 ; i < adjList.size() ; i++) {
 					
+					List<Character> chars = listOfChar.get(i);
+					
+					for (int j = 0 ; j < adjList.size() ; j++) {
+						
+						graph2.add(new Object[] {chars.get(j),new ArrayList<Object[]>()});
+						
+					}
+					
+					limits[i] = graph2.size();
 				}
+				
+
 			}
 			
 			bw.flush();
